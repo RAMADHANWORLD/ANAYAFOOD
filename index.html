@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anaya Food - Premium Pakistani Food Products</title>
+    <meta name="description" content="Premium Pakistani food products from Karachi. Quality rice, spices, oils, and organic products delivered to your kitchen.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #10b981;
+            --dark-green: #059669;
+            --deeper-green: #047857;
+            --light-green: #d1fae5;
+            --emerald-50: #ecfdf5;
+            --emerald-100: #d1fae5;
+            --emerald-500: #10b981;
+            --emerald-600: #059669;
+            --emerald-700: #047857;
+            --emerald-800: #065f46;
+            --emerald-900: #064e3b;
+            --text-dark: #111827;
+            --text-medium: #374151;
+            --text-light: #6b7280;
+            --text-lighter: #9ca3af;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Enhanced Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-md);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--emerald-600), var(--emerald-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo svg {
+            margin-right: 12px;
+            filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.3));
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--emerald-500), var(--emerald-600));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--emerald-600);
+            transform: translateY(-1px);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Enhanced Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--emerald-600) 0%, var(--emerald-700) 50%, var(--emerald-800) 100%);
+            color: var(--white);
+            padding: 140px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.95;
+            line-height: 1.7;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: var(--white);
+            color: var(--emerald-700);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-2xl);
+            background: var(--gray-50);
+        }
+
+        /* Enhanced Moving Products */
+        .moving-products {
+            background: linear-gradient(135deg, var(--gray-50), var(--emerald-50));
+            padding: 80px 0;
+            overflow: hidden;
+        }
+
+        .moving-products h2 {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--emerald-800);
+            margin-bottom: 3rem;
+            position: relative;
+            font-weight: 600;
+        }
+
+        .moving-products h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--emerald-500), var(--emerald-600));
+            border-radius: 2px;
+        }
+
+        .products-slider {
+            display: flex;
+            animation: slide 35s linear infinite;
+            gap: 30px;
+        }
+
+        .product-card {
+            flex: 0 0 320px;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-200);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--emerald-500), var(--emerald-600));
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-card h3 {
+            color: var(--emerald-700);
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .product-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .product-price {
+            color: var(--emerald-600);
+            font-weight: 700;
+            margin-top: 15px;
+            font-size: 1.1rem;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* New Anaya Food Industry Section */
+        #anaya-content {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--white) 0%, var(--gray-50) 100%);
+            position: relative;
+        }
+
+        #anaya-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2310b981' fill-opacity='0.02' fill-rule='evenodd'%3E%3Cpath d='m0 40l40-40h-40z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+        }
+
+        .anaya-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        #anaya-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--emerald-700);
+            background: linear-gradient(135deg, var(--emerald-700), var(--emerald-600));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            position: relative;
+        }
+
+        #anaya-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--emerald-500), var(--emerald-600));
+            border-radius: 2px;
+        }
+
+        #anaya-content > .anaya-container > p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 4rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .anaya-section {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .anaya-section:nth-child(2) { animation-delay: 0.1s; }
+        .anaya-section:nth-child(3) { animation-delay: 0.2s; }
+        .anaya-section:nth-child(4) { animation-delay: 0.3s; }
+        .anaya-section:nth-child(5) { animation-delay: 0.4s; }
+
+        .anaya-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .anaya-section p, .anaya-section ul {
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+        }
+
+        .anaya-section ul {
+            text-align: left;
+            display: inline-block;
+            margin: 0 auto 2rem;
+        }
+
+        .anaya-section ul li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .anaya-section ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--emerald-600);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .anaya-section ul li strong {
+            color: var(--emerald-700);
+            font-weight: 600;
+        }
+
+        .anaya-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            text-align: left;
+            margin-top: 2rem;
+        }
+
+        .anaya-card {
+            padding: 30px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-200);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .anaya-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--emerald-500), var(--emerald-600));
+        }
+
+        .anaya-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            background: linear-gradient(135deg, var(--white), var(--emerald-50));
+        }
+
+        .anaya-card h4 {
+            font-weight: 700;
+            color: var(--emerald-700);
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+
+        .anaya-card p {
+            color: var(--text-light);
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .anaya-image {
+            margin-top: 2.5rem;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            transition: all 0.3s ease;
+        }
+
+        .anaya-image:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .anaya-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .anaya-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Enhanced About Section */
+        .about-section {
+            background: linear-gradient(135deg, var(--emerald-50) 0%, var(--light-green) 100%);
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--emerald-800);
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .about-text p {
+            color: var(--text-medium);
+            margin-bottom: 25px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 25px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--emerald-600), var(--emerald-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-weight: 500;
+            margin-top: 5px;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 25px;
+            box-shadow: var(--shadow-xl);
+            transition: transform 0.3s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.02);
+        }
+
+        /* Enhanced Contact Section */
+        .contact-section {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .contact-section h2 {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--emerald-800);
+            margin-bottom: 3rem;
+            font-weight: 600;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, var(--gray-50), var(--emerald-50));
+            padding: 40px 30px;
+            border-radius: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-md);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            background: linear-gradient(135deg, var(--emerald-50), var(--light-green));
+        }
+
+        .contact-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--emerald-600), var(--emerald-500));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: var(--white);
+            font-size: 1.8rem;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover .contact-icon {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .contact-card h3 {
+            color: var(--emerald-800);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .contact-card p {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Enhanced Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--emerald-800) 0%, var(--emerald-900) 100%);
+            color: var(--white);
+            padding: 60px 0 30px;
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 50px;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--white);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.8);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Enhanced Admin Button */
+        .admin-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--emerald-600), var(--emerald-500));
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            box-shadow: var(--shadow-xl);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-size: 1.2rem;
+        }
+
+        .admin-button:hover {
+            transform: scale(1.15);
+            box-shadow: var(--shadow-2xl);
+            background: linear-gradient(135deg, var(--emerald-700), var(--emerald-600));
+        }
+
+        /* Enhanced Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            #anaya-content h2 {
+                font-size: 2.5rem;
+            }
+
+            .anaya-section h3 {
+                font-size: 1.8rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .anaya-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .moving-products h2, .about-text h2, .contact-section h2 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .container, .anaya-container {
+                padding: 0 15px;
+            }
+
+            #anaya-content h2 {
+                font-size: 2rem;
+            }
+
+            .anaya-section h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Loading and Error States */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .error-message {
+            text-align: center;
+            padding: 60px 20px;
+            color: #dc2626;
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 1px solid #fecaca;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Scroll animations */
+        @media (prefers-reduced-motion: no-preference) {
+            .anaya-section {
+                opacity: 0;
+                transform: translateY(50px);
+                transition: all 0.8s ease-out;
+            }
+
+            .anaya-section.animate {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="#" class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="8" fill="url(#gradient1)"/>
+                    <path d="M20 8L28 14V26L20 32L12 26V14L20 8Z" fill="white"/>
+                    <circle cx="20" cy="18" r="3" fill="#10b981"/>
+                    <path d="M16 24H24V26H16V24Z" fill="#10b981"/>
+                    <defs>
+                        <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                Anaya Food
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <h1>Delicious Snack Products</h1>
+            <p>From Karachi to your table - bringing you the crunchiest chips and tastiest snacks. Anaya Food delivers quality snack products that satisfy every craving.</p>
+            <a href="#products" class="btn">Explore Products</a>
+        </div>
+    </section>
+
+    <!-- Moving Products -->
+    <section class="moving-products">
+        <div class="container">
+            <h2>Our Featured Products</h2>
+        </div>
+        <div class="products-slider" id="movingProducts">
+            <div class="loading">Loading products...</div>
+        </div>
+    </section>
+
+    <!-- Anaya Food Industry Content Section -->
+    <section id="anaya-content">
+        <div class="anaya-container">
+            <h2>Anaya Food Industry – The Taste of Pakistan</h2>
+            <p>
+                From Karachi to Kashmir, Anaya Food Industry is shaping the future of snacks, biscuits, and confectionery. 
+                We bring authentic flavors, trusted quality, and innovation that reflect Pakistan's spirit.
+            </p>
+
+            <!-- Who We Are -->
+            <div class="anaya-section">
+                <h3>Who We Are</h3>
+                <p>
+                    At Anaya Food Industry, we don't just make food – we create experiences. Founded in Karachi's DHA Phase 2,
+                    our vision is to craft snacks that represent Pakistan's vibrant taste and global standards. 
+                    From Crunchies Chips to Chocomo Biscuits, every product is a story of care and innovation.
+                </p>
+                <div class="anaya-image">
+                    <img src="https://images.unsplash.com/photo-1577303935007-0d306ee638cf?ixlib=rb-4.0.3&w=1200&h=600&fit=crop" alt="Karachi Food Industry">
+                </div>
+            </div>
+
+            <!-- Our Flagship Products -->
+            <div class="anaya-section">
+                <h3>Our Flagship Products</h3>
+                <ul>
+                    <li><strong>Crunchies Chips</strong> – bold flavors, inspired by Pakistan's love for crispy snacks</li>
+                    <li><strong>Chocomo Biscuits</strong> – delicious chocolate-filled biscuits loved by kids & families</li>
+                    <li><strong>Snack Innovations</strong> – exciting new tastes with every season</li>
+                </ul>
+                <div class="anaya-image">
+                    <img src="https://images.unsplash.com/photo-1621447504864-d8686e12698c?ixlib=rb-4.0.3&w=1200&h=600&fit=crop" alt="Pakistani Snacks">
+                </div>
+            </div>
+
+            <!-- Why Choose Anaya -->
+            <div class="anaya-section">
+                <h3>Why Choose Anaya?</h3>
+                <div class="anaya-grid">
+                    <div class="anaya-card">
+                        <h4>Authentic Taste</h4>
+                        <p>Snacks inspired by Pakistani flavors and traditions.</p>
+                    </div>
+                    <div class="anaya-card">
+                        <h4>Trusted Quality</h4>
+                        <p>World-class production standards with strict quality controls.</p>
+                    </div>
+                    <div class="anaya-card">
+                        <h4>Nationwide Reach</h4>
+                        <p>From Karachi's streets to Punjab's fields, we're everywhere.</p>
+                    </div>
+                    <div class="anaya-card">
+                        <h4>Innovation Everyday</h4>
+                        <p>Constantly exploring new flavors and snack categories.</p>
+                    </div>
+                </div>
+                <div class="anaya-image">
+                    <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&w=1200&h=600&fit=crop" alt="Pakistani Family Enjoying Snacks">
+                </div>
+            </div>
+
+            <!-- Sustainability -->
+            <div class="anaya-section">
+                <h3>Sustainability & Care</h3>
+                <p>
+                    We believe in giving back to the land that feeds us. Anaya invests in eco-friendly packaging, 
+                    supports local farmers, and uses efficient production methods to ensure a greener future for Pakistan.
+                </p>
+                <div class="anaya-image">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&w=1200&h=600&fit=crop" alt="Pakistani Farmland">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Premium Quality Since Day One</h2>
+                    <p>Anaya Food has been committed to delivering the highest quality snack products from our base in Karachi to families across Pakistan. Our dedication to authentic flavors and modern production techniques ensures every bite is perfect.</p>
+                    <p>We source the finest ingredients locally and internationally, maintaining strict quality standards that have made us a trusted name in Pakistani households.</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Products</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Cities</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">10M+</div>
+                            <div class="stat-label">Happy Customers</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&w=600&h=400&fit=crop" alt="Food Production Facility">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Our Location</h3>
+                    <p>DHA Phase 2, Karachi<br>Sindh, Pakistan</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3>Call Us</h3>
+                    <p>+92 21 1234 5678<br>+92 300 1234 567</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email Us</h3>
+                    <p>info@anayafood.com<br>sales@anayafood.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Anaya Food</h4>
+                    <p style="color: rgba(255,255,255,0.8); line-height: 1.6;">Premium Pakistani snack products crafted with care and tradition. From our kitchen to yours, bringing authentic flavors that define Pakistan's rich culinary heritage.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Product Categories</h4>
+                    <ul>
+                        <li><a href="#">Crunchies Chips</a></li>
+                        <li><a href="#">Chocomo Biscuits</a></li>
+                        <li><a href="#">Premium Snacks</a></li>
+                        <li><a href="#">Special Offers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><a href="#">DHA Phase 2, Karachi</a></li>
+                        <li><a href="tel:+92211234567">+92 21 1234 5678</a></li>
+                        <li><a href="mailto:info@anayafood.com">info@anayafood.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Anaya Food Industry. All rights reserved. | Crafted with love in Pakistan</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Button -->
+    <button class="admin-button" onclick="showAdminPanel()" title="Admin Panel">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <script>
+        // Supabase configuration
+        const SUPABASE_URL = 'https://xcqzbvmpqjvuxnuqxpve.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjcXpidm1wcWp2dXhudXF4cHZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyNjg2MjcsImV4cCI6MjA3MTg0NDYyN30.u-AZPC3RALGY4qIJOkE19GeMdbGleA5sKm2Bxwy31g0';
+        
+        let supabase;
+        try {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        } catch (error) {
+            console.log('Supabase not configured, using fallback data');
+        }
+
+        // Sample fallback data
+        const fallbackProducts = [
+            {
+                id: 1,
+                name: 'Crunchies Original Chips',
+                price: 'Rs. 25',
+                image: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?ixlib=rb-4.0.3&w=300&h=200&fit=crop',
+                description: 'Crispy and delicious original flavored chips made with premium potatoes.'
+            },
+            {
+                id: 2,
+                name: 'Chocomo Chocolate Biscuits',
+                price: 'Rs. 45',
+                image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?ixlib=rb-4.0.3&w=300&h=200&fit=crop',
+                description: 'Rich chocolate-filled biscuits perfect for tea time and family moments.'
+            },
+            {
+                id: 3,
+                name: 'Spicy Masala Chips',
+                price: 'Rs. 30',
+                image: 'https://images.unsplash.com/photo-1621447504864-d8686e12698c?ixlib=rb-4.0.3&w=300&h=200&fit=crop',
+                description: 'Bold and spicy masala flavored chips with authentic Pakistani spices.'
+            },
+            {
+                id: 4,
+                name: 'Cream Crackers',
+                price: 'Rs. 35',
+                image: 'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&w=300&h=200&fit=crop',
+                description: 'Light and crispy cream crackers, perfect for any time snacking.'
+            },
+            {
+                id: 5,
+                name: 'BBQ Flavor Chips',
+                price: 'Rs. 28',
+                image: 'https://images.unsplash.com/photo-1613919763848-6c2c7e9c0fba?ixlib=rb-4.0.3&w=300&h=200&fit=crop',
+                description: 'Smoky BBQ flavored chips with a perfect balance of spices.'
+            },
+            {
+                id: 6,
+                name: 'Sweet Biscuits',
+                price: 'Rs. 40',
+                image: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?ixlib=rb-4.0.3&w=300&h=200&fit=crop',
+                description: 'Traditional sweet biscuits made with finest ingredients and love.'
+            }
+        ];
+
+        const fallbackCategories = [
+            {
+                id: 1,
+                name: 'Premium Chips',
+                description: 'Crispy, flavorful chips made from the finest potatoes with authentic spices.',
+                image: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?ixlib=rb-4.0.3&w=400&h=300&fit=crop'
+            },
+            {
+                id: 2,
+                name: 'Chocolate Biscuits',
+                description: 'Rich, creamy chocolate biscuits perfect for tea time and family gatherings.',
+                image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?ixlib=rb-4.0.3&w=400&h=300&fit=crop'
+            },
+            {
+                id: 3,
+                name: 'Traditional Snacks',
+                description: 'Authentic Pakistani snacks with traditional flavors and modern quality.',
+                image: 'https://images.unsplash.com/photo-1621447504864-d8686e12698c?ixlib=rb-4.0.3&w=400&h=300&fit=crop'
+            }
+        ];
+
+        // Load moving products
+        async function loadMovingProducts() {
+            const slider = document.getElementById('movingProducts');
+            
+            try {
+                let products = fallbackProducts;
+                
+                if (supabase) {
+                    const { data, error } = await supabase
+                        .from('products')
+                        .select('*')
+                        .eq('availability', 'in_stock')
+                        .limit(10);
+                    
+                    if (!error && data && data.length > 0) {
+                        // Convert database format to display format
+                        products = data.map(product => ({
+                            id: product.id,
+                            name: product.name,
+                            price: `Rs. ${product.price}`,
+                            image: product.image_url || 'https://images.unsplash.com/photo-1555909114-f6ef0ba296cc?ixlib=rb-4.0.3&w=300&h=200&fit=crop',
+                            description: product.description || 'Premium quality product from Anaya Food Industry.'
+                        }));
+                    }
+                }
+
+                // Duplicate products for seamless scrolling
+                const duplicatedProducts = [...products, ...products, ...products];
+                
+                slider.innerHTML = duplicatedProducts.map(product => `
+                    <div class="product-card">
+                        <img src="${product.image}" alt="${product.name}" onerror="this.src='https://images.unsplash.com/photo-1555909114-f6ef0ba296cc?ixlib=rb-4.0.3&w=300&h=200&fit=crop'" loading="lazy">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <div class="product-price">${product.price}</div>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error('Error loading products:', error);
+                slider.innerHTML = `<div class="error-message">Unable to load products at this time. Please try again later.</div>`;
+            }
+        }
+
+        // Initialize scroll animations for Anaya section
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.anaya-section').forEach(section => {
+                observer.observe(section);
+            });
+        }
+
+        // Admin panel function - redirects to admin page
+        function showAdminPanel() {
+            window.open('admin.html', '_blank');
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMovingProducts();
+            initScrollAnimations();
+        });
+
+        // Add some interactive effects
+        document.addEventListener('mousemove', function(e) {
+            const cards = document.querySelectorAll('.anaya-card, .product-card, .contact-card');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+                } else {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+                }
+            });
+        });
+
+        // Header scroll effect
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+    </script>
+</body>
+</html>
